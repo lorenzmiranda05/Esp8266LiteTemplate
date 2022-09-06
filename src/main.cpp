@@ -1,7 +1,5 @@
 #include <Arduino.h>
-#include <ESP8266WiFiMulti.h>
-
-ESP8266WiFiMulti wm;
+#include <Utility.h>
 
 void setup()
 {
@@ -9,7 +7,8 @@ void setup()
   delay(10);
   wm.addAP("SSID1", "Password1");
   wm.addAP("SSID2", "Password2");
-  wm.addAP("SSID3", "Password3");
+  wm.addAP("MindGoblin", "P@ssw0rdWLAN");
+  addApFromConfigFile();
 }
 
 void loop()
@@ -28,3 +27,4 @@ void loop()
     Serial.println(WiFi.localIP());
     delay(5000);
   }
+}
