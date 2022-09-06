@@ -62,13 +62,13 @@ void setupOTA()
 {
     // Create unique ota host name by appending MAC Address
     uint16_t maxlen = strlen(espName) + 8;
-    char *fullhostname = new char[maxlen];
+    char *deviceName = new char[maxlen];
     uint8_t mac[6];
     WiFi.macAddress(mac);
-    snprintf(fullhostname, maxlen, "%s-%02x%02x%02x", espName, mac[3], mac[4], mac[5]);
-    strcpy(espName, fullhostname);
-    ArduinoOTA.setHostname(fullhostname);
-    delete[] fullhostname;
+    snprintf(deviceName, maxlen, "%s-%02x%02x%02x", espName, mac[3], mac[4], mac[5]);
+    strcpy(espName, deviceName);
+    ArduinoOTA.setHostname(deviceName);
+    delete[] deviceName;
 
     ArduinoOTA.onStart([]()
                        {
