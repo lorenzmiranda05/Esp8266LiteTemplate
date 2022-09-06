@@ -28,8 +28,47 @@ Template to be used for ESP8266-based boards with small flash memory.
 
 <br  />
 
+**Dependency Graph**
+
+|-- ArduinoJson @ 6.19.4
+<br  />
+|-- TelnetStream @ 1.2.2
+<br  />
+|&nbsp; &nbsp; &nbsp;|-- ESP8266WiFi @ 1.0
+<br  />
+|&nbsp; &nbsp; &nbsp;|-- Ethernet @ 2.0.0
+<br  />
+|&nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp;|-- SPI @ 1.0
+<br  />
+|-- Utility
+<br  />
+|&nbsp; &nbsp; &nbsp;|-- ArduinoJson @ 6.19.4
+<br  />
+|&nbsp; &nbsp; &nbsp;|-- ArduinoOTA @ 1.0
+<br  />
+|&nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp;|-- ESP8266WiFi @ 1.0
+<br  />
+|&nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp;|-- ESP8266mDNS @ 1.2
+<br  />
+|&nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp;|-- ESP8266WiFi @ 1.0
+<br  />
+|&nbsp; &nbsp; &nbsp;|-- ESP8266WiFi @ 1.0
+<br  />
+|&nbsp; &nbsp; &nbsp;|-- LittleFS @ 0.1.0
+<br  />
+|&nbsp; &nbsp; &nbsp;|-- TelnetStream @ 1.2.2
+<br  />
+|&nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp;|-- ESP8266WiFi @ 1.0
+<br  />
+|&nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp;|-- Ethernet @ 2.0.0
+<br  />
+|&nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp;|-- SPI @ 1.0
+<br  />
+
+<br  />
+
 **Tasks**
 * [x] Connect to WiFi using ESP8266WiFiMulti.h
 * [x] Use WiFi credentials from File System
 * [x] Update embedded program using ArduinoOTA.h
-* [ ] Print to serial and telnet streams
+* [x] Print to serial and telnet streams

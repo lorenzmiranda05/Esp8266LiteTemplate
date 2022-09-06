@@ -3,13 +3,65 @@
 #include <ArduinoJson.h>
 #include <ESP8266WiFiMulti.h>
 #include <ArduinoOTA.h>
+#include <TelnetStream.h>
 
 #define JsonConfigFile "/config.json"
 
 ESP8266WiFiMulti wm;
 char espName[15];
 
-#define JsonConfigFile "/config.json"
+void serialAndTelnetPrint(__FlashStringHelper *message)
+{
+    Serial.print(message);
+    TelnetStream.print(message);
+}
+void serialAndTelnetPrint(const char *message)
+{
+    Serial.print(message);
+    TelnetStream.print(message);
+}
+void serialAndTelnetPrint(int message)
+{
+    Serial.print(message);
+    TelnetStream.print(message);
+}
+void serialAndTelnetPrint(IPAddress message)
+{
+    Serial.print(message);
+    TelnetStream.print(message);
+}
+void serialAndTelnetPrint(String message)
+{
+    Serial.print(message);
+    TelnetStream.print(message);
+}
+
+void serialAndTelnetPrintln(__FlashStringHelper *message)
+{
+    Serial.println(message);
+    TelnetStream.println(message);
+}
+void serialAndTelnetPrintln(const char *message)
+{
+    Serial.println(message);
+    TelnetStream.println(message);
+}
+void serialAndTelnetPrintln(int message)
+{
+    Serial.println(message);
+    TelnetStream.println(message);
+}
+void serialAndTelnetPrintln(IPAddress message)
+{
+    Serial.println(message);
+    TelnetStream.println(message);
+}
+void serialAndTelnetPrintln(String message)
+{
+    Serial.println(message);
+    TelnetStream.println(message);
+}
+
 bool loadConfigFile()
 // Load existing configuration file
 {
@@ -17,25 +69,25 @@ bool loadConfigFile()
     // LittleFS.format();
 
     // Read configuration from FS json
-    Serial.println(F("Mounting FS"));
+    serialAndTelnetPrintln(F("Mounting FS"));
 
     // May need to make it begin(true) first time you are using SPIFFS
     if (LittleFS.begin())
     {
         // The file exists, reading and loading
-        Serial.println(F("Reading config"));
+        serialAndTelnetPrintln(F("Reading config"));
         File configFile = LittleFS.open(JsonConfigFile, "r");
         if (configFile)
         {
-            Serial.println(F("Opened config"));
+            serialAndTelnetPrintln(F("Opened config"));
             StaticJsonDocument<512> json;
             DeserializationError error = deserializeJson(json, configFile);
             //  serializeJsonPretty(json, Serial);
             //  serializeJsonPretty(json, TelnetStream);
             if (!error)
             {
-                // Serial.println(F(""));
-                Serial.println(F("Parsing config"));
+                // serialAndTelnetPrintln(F(""));
+                serialAndTelnetPrintln(F("Parsing config"));
                 strcpy(espName, json["deviceType"]);
                 wm.addAP(json["accessPoint"][0]["ssid"], json["accessPoint"][0]["password"]);
                 wm.addAP(json["accessPoint"][1]["ssid"], json["accessPoint"][1]["password"]);
@@ -46,14 +98,14 @@ bool loadConfigFile()
             else
             {
                 // Error loading JSON data
-                Serial.println(F("Load config failed"));
+                serialAndTelnetPrintln(F("Load config failed"));
             }
         }
     }
     else
     {
         // Error mounting file system
-        Serial.println(F("Mount FS failed"));
+        serialAndTelnetPrintln(F("Mount FS failed"));
     }
     return false;
 }
@@ -72,24 +124,24 @@ void setupOTA()
 
     ArduinoOTA.onStart([]()
                        {
-                            Serial.print(F(""));
-                            Serial.println(F("Update start")); });
+                            serialAndTelnetPrint(F(""));
+                            serialAndTelnetPrintln(F("Update start")); });
 
     ArduinoOTA.onEnd([]()
-                     { Serial.println(F("\nEnd")); });
+                     { serialAndTelnetPrintln(F("\nEnd")); });
 
     ArduinoOTA.onProgress([](unsigned int progress, unsigned int total)
                           { Serial.printf("Progress: %u%%\r", (progress / (total / 100))); });
 
     ArduinoOTA.onError([](ota_error_t error)
                        {
-        Serial.printf("Error[%u]: ", error);
-        if (error == OTA_AUTH_ERROR) Serial.println(F("\nAuth Failed"));
-        else if (error == OTA_BEGIN_ERROR) Serial.println(F("\nBegin Failed"));
-        else if (error == OTA_CONNECT_ERROR) Serial.println(F("\nConnect Failed"));
-        else if (error == OTA_RECEIVE_ERROR) Serial.println(F("\nReceive Failed"));
-        else if (error == OTA_END_ERROR) Serial.println(F("\nEnd Failed")); });
+                            Serial.printf("Error[%u]: ", error);
+                            if (error == OTA_AUTH_ERROR) serialAndTelnetPrintln(F("\nAuth Failed"));
+                            else if (error == OTA_BEGIN_ERROR) serialAndTelnetPrintln(F("\nBegin Failed"));
+                            else if (error == OTA_CONNECT_ERROR) serialAndTelnetPrintln(F("\nConnect Failed"));
+                            else if (error == OTA_RECEIVE_ERROR) serialAndTelnetPrintln(F("\nReceive Failed"));
+                            else if (error == OTA_END_ERROR) serialAndTelnetPrintln(F("\nEnd Failed")); });
 
     ArduinoOTA.begin();
-    Serial.println(F("ESPOTA READY"));
+    serialAndTelnetPrintln(F("ESPOTA READY"));
 }
