@@ -74,4 +74,4 @@ Template to be used for ESP8266-based boards with small flash memory.
 * [x] Update embedded program using ArduinoOTA.h
 * [x] Print to serial and telnet streams
 * [x] Add option to stop broadcasting device details
-* [ ] Use a static IP
+* [x] Use a static IP

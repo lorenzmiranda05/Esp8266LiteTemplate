@@ -7,6 +7,7 @@ void setup()
   TelnetStream.begin();
   loadConfigFile();
   setupOTA();
+  WiFi.config(local_IP, gateway, subnet);
 }
 
 void loop()
