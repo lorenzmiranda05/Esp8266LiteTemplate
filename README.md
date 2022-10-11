@@ -73,3 +73,4 @@ Template to be used for ESP8266-based boards with small flash memory.
 * [x] Use WiFi credentials from File System
 * [x] Update embedded program using ArduinoOTA.h
 * [x] Print to serial and telnet streams
+* [x] Add option to stop broadcasting device details
