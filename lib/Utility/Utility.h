@@ -9,6 +9,7 @@
 
 ESP8266WiFiMulti wm;
 char espName[15];
+int broadcastDeviceDetails = 1;
 
 void serialAndTelnetPrint(__FlashStringHelper *message)
 {
@@ -89,6 +90,7 @@ bool loadConfigFile()
                 // serialAndTelnetPrintln(F(""));
                 serialAndTelnetPrintln(F("Parsing config"));
                 strcpy(espName, json["deviceType"]);
+                broadcastDeviceDetails = json["broadcastDeviceDetails"].as<int>();
                 wm.addAP(json["accessPoint"][0]["ssid"], json["accessPoint"][0]["password"]);
                 wm.addAP(json["accessPoint"][1]["ssid"], json["accessPoint"][1]["password"]);
                 wm.addAP(json["accessPoint"][2]["ssid"], json["accessPoint"][2]["password"]);

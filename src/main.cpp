@@ -5,14 +5,12 @@ void setup()
 {
   Serial.begin(921600);
   TelnetStream.begin();
-  delay(10);
   loadConfigFile();
   setupOTA();
 }
 
 void loop()
 {
-  ArduinoOTA.handle();
   if (wm.run() != WL_CONNECTED)
   {
     serialAndTelnetPrintln("WiFi not connected!");
@@ -20,13 +18,23 @@ void loop()
   }
   if (wm.run() == WL_CONNECTED)
   {
-    serialAndTelnetPrintln("");
-    serialAndTelnetPrint("Connected to ");
-    serialAndTelnetPrintln(WiFi.SSID());
-    serialAndTelnetPrint("Device Name ");
-    serialAndTelnetPrintln(espName);
-    serialAndTelnetPrint("IP Address ");
-    serialAndTelnetPrintln(WiFi.localIP());
-    delay(5000);
+    ArduinoOTA.handle();
+    if (broadcastDeviceDetails == 0)
+    {
+      // DO SOMETHING
+    }
+    else
+    {
+      serialAndTelnetPrintln("");
+      serialAndTelnetPrint("Device Name: ");
+      serialAndTelnetPrintln(espName);
+      serialAndTelnetPrint("WiFi Connection: ");
+      serialAndTelnetPrintln(WiFi.SSID());
+      serialAndTelnetPrint("MAC Address: ");
+      serialAndTelnetPrintln(WiFi.macAddress());
+      serialAndTelnetPrint("IP Address: ");
+      serialAndTelnetPrintln(WiFi.localIP());
+      delay(5000);
+    }
   }
 }

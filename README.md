@@ -9,6 +9,7 @@ Template to be used for ESP8266-based boards with small flash memory.
     ```
     {
         "deviceType" : "ESP01",
+        "broadcastDeviceDetails" : 0,
         "accessPoint" : [
                             {
                                 "ssid": "WiFi1",
