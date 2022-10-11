@@ -10,6 +10,7 @@ Template to be used for ESP8266-based boards with small flash memory.
     {
         "deviceType" : "ESP01",
         "broadcastDeviceDetails" : 0,
+        "ipAddress" : [192, 168, 1, 69],
         "accessPoint" : [
                             {
                                 "ssid": "WiFi1",
@@ -75,3 +76,4 @@ Template to be used for ESP8266-based boards with small flash memory.
 * [x] Print to serial and telnet streams
 * [x] Add option to stop broadcasting device details
 * [x] Use a static IP
+* [x] Load static IP from config.json file
