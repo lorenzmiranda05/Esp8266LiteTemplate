@@ -2,6 +2,16 @@
 Template to be used for ESP8266-based boards with small flash memory.
 
 ---
+
+<br  />
+
+**Bread Board Setup**
+
+1. ESP-01
+    <br  />
+    <br  />
+    ![github](https://raw.githubusercontent.com/lorenzmiranda05/Esp8266LiteTemplate/main/Assets/Image/Schematic_Esp8266LiteTemplate.png)
+
 <br  />
 
 **data>config.json**
