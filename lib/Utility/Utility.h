@@ -98,6 +98,7 @@ bool loadConfigFile()
                 IPAddress subnet(255, 255, 0, 0);
                 IPAddress local_IP(json["ipAddress"][0].as<int>(), json["ipAddress"][1].as<int>(), json["ipAddress"][2].as<int>(), json["ipAddress"][3].as<int>());
                 WiFi.config(local_IP, gateway, subnet);
+                ArduinoOTA.setPassword(json["otaPassword"]);
                 return true;
             }
             else
