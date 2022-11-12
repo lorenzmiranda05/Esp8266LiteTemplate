@@ -47,6 +47,11 @@ void serialAndTelnetPrint(int message)
     Serial.print(message);
     TelnetStream.print(message);
 }
+void serialAndTelnetPrint(float message)
+{
+    Serial.print(message);
+    TelnetStream.print(message);
+}
 void serialAndTelnetPrint(IPAddress message)
 {
     Serial.print(message);
@@ -69,6 +74,11 @@ void serialAndTelnetPrintln(const char *message)
     TelnetStream.println(message);
 }
 void serialAndTelnetPrintln(int message)
+{
+    Serial.println(message);
+    TelnetStream.println(message);
+}
+void serialAndTelnetPrintln(float message)
 {
     Serial.println(message);
     TelnetStream.println(message);
