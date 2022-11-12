@@ -90,3 +90,4 @@ Template to be used for ESP8266-based boards with small flash memory.
 * [x] Load static IP from config.json file
 * [x] Use OTA Password
 * [x] Load OTA Password from config.json file
+* [x] Replace delay function with a non-blocking code

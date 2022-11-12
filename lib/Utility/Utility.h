@@ -7,9 +7,30 @@
 
 #define JsonConfigFile "/config.json"
 
-ESP8266WiFiMulti wm;
+ESP8266WiFiMulti WiFiMulti;
 char espName[15];
 int broadcastDeviceDetails = 1;
+
+class Schedule
+{
+public:
+    unsigned long storedMillis;
+    unsigned long interval;
+    boolean checkMillis()
+    {
+        unsigned long millisNow = millis();
+        // handled unsigned long overflow scenario
+        if (millisNow - storedMillis >= interval)
+        {
+            storedMillis = millisNow;
+            return true;
+        }
+        return false;
+    }
+};
+
+Schedule wifiReconnectSchedule;
+Schedule broadcastSchedule;
 
 void serialAndTelnetPrint(__FlashStringHelper *message)
 {
@@ -91,9 +112,9 @@ bool loadConfigFile()
                 serialAndTelnetPrintln(F("Parsing config"));
                 strcpy(espName, json["deviceType"]);
                 broadcastDeviceDetails = json["broadcastDeviceDetails"].as<int>();
-                wm.addAP(json["accessPoint"][0]["ssid"], json["accessPoint"][0]["password"]);
-                wm.addAP(json["accessPoint"][1]["ssid"], json["accessPoint"][1]["password"]);
-                wm.addAP(json["accessPoint"][2]["ssid"], json["accessPoint"][2]["password"]);
+                WiFiMulti.addAP(json["accessPoint"][0]["ssid"], json["accessPoint"][0]["password"]);
+                WiFiMulti.addAP(json["accessPoint"][1]["ssid"], json["accessPoint"][1]["password"]);
+                WiFiMulti.addAP(json["accessPoint"][2]["ssid"], json["accessPoint"][2]["password"]);
                 IPAddress gateway(192, 168, 1, 1);
                 IPAddress subnet(255, 255, 0, 0);
                 IPAddress local_IP(json["ipAddress"][0].as<int>(), json["ipAddress"][1].as<int>(), json["ipAddress"][2].as<int>(), json["ipAddress"][3].as<int>());
@@ -150,4 +171,12 @@ void setupOTA()
 
     ArduinoOTA.begin();
     serialAndTelnetPrintln(F("ESPOTA READY"));
+}
+
+void wifiReconnet()
+{
+    if ((WiFi.status() != WL_CONNECTED) && wifiReconnectSchedule.checkMillis())
+    {
+        WiFiMulti.run();
+    }
 }

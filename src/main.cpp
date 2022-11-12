@@ -7,34 +7,38 @@ void setup()
   TelnetStream.begin();
   loadConfigFile();
   setupOTA();
+  wifiReconnectSchedule.storedMillis = 0;
+  wifiReconnectSchedule.interval = 60000;
+  broadcastSchedule.storedMillis = 0;
+  broadcastSchedule.interval = 5000;
 }
 
 void loop()
 {
-  if (wm.run() != WL_CONNECTED)
-  {
-    serialAndTelnetPrintln("WiFi not connected!");
-    delay(5000);
-  }
-  if (wm.run() == WL_CONNECTED)
+  wifiReconnet();
+  if (WiFi.status() == WL_CONNECTED)
   {
     ArduinoOTA.handle();
-    if (broadcastDeviceDetails == 0)
+    if (broadcastDeviceDetails == 1)
     {
-      // DO SOMETHING
+      if (broadcastSchedule.checkMillis())
+      {
+        serialAndTelnetPrintln("");
+        serialAndTelnetPrint("Device Name: ");
+        serialAndTelnetPrintln(espName);
+        serialAndTelnetPrint("WiFi Connection: ");
+        serialAndTelnetPrintln(WiFi.SSID());
+        serialAndTelnetPrint("MAC Address: ");
+        serialAndTelnetPrintln(WiFi.macAddress());
+        serialAndTelnetPrint("IP Address: ");
+        serialAndTelnetPrintln(WiFi.localIP());
+      }
     }
     else
     {
-      serialAndTelnetPrintln("");
-      serialAndTelnetPrint("Device Name: ");
-      serialAndTelnetPrintln(espName);
-      serialAndTelnetPrint("WiFi Connection: ");
-      serialAndTelnetPrintln(WiFi.SSID());
-      serialAndTelnetPrint("MAC Address: ");
-      serialAndTelnetPrintln(WiFi.macAddress());
-      serialAndTelnetPrint("IP Address: ");
-      serialAndTelnetPrintln(WiFi.localIP());
-      delay(5000);
+      /*DO SOME WIFI RELATED STUFF*/
     }
   }
+
+  /*DO SOME NON-WIFI RELATED STUFF*/
 }
