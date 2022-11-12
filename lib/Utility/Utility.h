@@ -95,11 +95,7 @@ void serialAndTelnetPrintln(String message)
 }
 
 bool loadConfigFile()
-// Load existing configuration file
 {
-    // Uncomment if we need to format filesystem
-    // LittleFS.format();
-
     // Read configuration from FS json
     serialAndTelnetPrintln(F("Mounting FS"));
 
@@ -114,11 +110,8 @@ bool loadConfigFile()
             serialAndTelnetPrintln(F("Opened config"));
             StaticJsonDocument<512> json;
             DeserializationError error = deserializeJson(json, configFile);
-            //  serializeJsonPretty(json, Serial);
-            //  serializeJsonPretty(json, TelnetStream);
             if (!error)
             {
-                // serialAndTelnetPrintln(F(""));
                 serialAndTelnetPrintln(F("Parsing config"));
                 strcpy(espName, json["deviceType"]);
                 broadcastDeviceDetails = json["broadcastDeviceDetails"].as<int>();
@@ -134,14 +127,12 @@ bool loadConfigFile()
             }
             else
             {
-                // Error loading JSON data
                 serialAndTelnetPrintln(F("Load config failed"));
             }
         }
     }
     else
     {
-        // Error mounting file system
         serialAndTelnetPrintln(F("Mount FS failed"));
     }
     return false;
